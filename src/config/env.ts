@@ -13,14 +13,14 @@ const serverEnvSchema = z.object({
 
 // Client-side environment variables (safe to expose to browser)
 const clientEnvSchema = z.object({
-  API_URL: z.url({
-    message: "API_URL must be a valid URL",
+  NEXT_PUBLIC_API_URL: z.url({
+    message: "NEXT_PUBLIC_API_URL must be a valid URL",
   }),
-  APP_URL: z.url({
-    message: "APP_URL must be a valid URL",
+  NEXT_PUBLIC_APP_URL: z.url({
+    message: "NEXT_PUBLIC_APP_URL must be a valid URL",
   }),
-  APP_NAME: z.string({
-    message: "APP_NAME is required",
+  NEXT_PUBLIC_APP_NAME: z.string({
+    message: "NEXT_PUBLIC_APP_NAME is required",
   }),
 });
 
