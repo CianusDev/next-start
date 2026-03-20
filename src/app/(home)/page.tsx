@@ -17,7 +17,7 @@ const loadHomeData = createLoader("/", async ({ params, searchParams }) => {
 export default async function Page(props: typeof loadHomeData.Props) {
   const data = await loadHomeData(props);
   return (
-    <LayoutPage className="items-center justify-center min-h-screen">
+    <LayoutPage className="items-center justify-center gap-4 min-h-screen">
       <h1 className="text-4xl font-semibold">{data.message}</h1>
     </LayoutPage>
   );

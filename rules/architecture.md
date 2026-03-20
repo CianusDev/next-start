@@ -60,10 +60,14 @@ src/
 | **React** | 19.x | Bibliothèque UI |
 | **TypeScript** | 5.x | Typage statique strict |
 | **Tailwind CSS** | 4.x | Styling utility-first |
-| **shadcn/ui** | latest | Composants UI (style new-york) |
+| **shadcn/ui** | latest | Composants UI (radix-ui, style new-york) |
 | **Axios** | 1.x | Client HTTP |
 | **Zod** | 4.x | Validation de schémas |
+| **react-hook-form** | 7.x | Gestion des formulaires |
+| **@hookform/resolvers** | 5.x | Intégration Zod + react-hook-form |
 | **jose** | 6.x | Gestion des JWT |
+| **sonner** | 2.x | Notifications toast |
+| **lucide-react** | latest | Icônes |
 
 ---
 
@@ -105,12 +109,18 @@ components/
 │   ├── button.tsx
 │   ├── input.tsx
 │   └── ...
+├── forms/               # Composants de formulaire réutilisables
+│   ├── form.tsx         # Wrapper <form> stylisé
+│   ├── form-wrapper.tsx # Conteneur avec titre/description
+│   ├── form-input.tsx   # Input avec label, erreur, toggle password
+│   └── field.tsx        # Field et FieldError primitives
 └── layouts/             # Layouts réutilisables
     └── layout-page.tsx  # Layout de page standard
 ```
 
 **Règles :**
 - `ui/` : Réservé aux composants générés par **shadcn/ui** - ne pas modifier manuellement
+- `forms/` : Composants de formulaire génériques, utilisés avec `react-hook-form`
 - `layouts/` : Layouts réutilisables (wrappers de pages, structures communes)
 - Les composants **métier spécifiques** vont dans `features/{feature}/components/`
 
@@ -173,6 +183,7 @@ features/
 | `*.guard.ts` | Vérification d'accès, redirections | Server-only |
 | `components/` | Composants UI spécifiques | Selon besoin |
 | `*.types.ts` | Types/DTOs spécifiques (optionnel) | - |
+| `*.interface.ts` | Interfaces TypeScript (optionnel, alt à types.ts) | - |
 | `*.schema.ts` | Schémas Zod de validation (optionnel) | - |
 
 **Voir :** `rules/patterns/features.md` pour le guide complet.

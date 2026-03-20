@@ -21,14 +21,17 @@ Un **hook** est une fonction React qui encapsule de la logique réutilisable ave
 // features/users/use-users.ts
 "use client";
 
-import { useEffect, useState } from "react";
 import { User } from "@/models/user.model";
+import { useEffect, useState } from "react";
 import { getUsers } from "./users.service";
+import { toast } from "sonner";
 
 export function useUsers() {
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const defaultErrorMessage =
+    "Une erreur s'est produite lors de la récupération des utilisateurs";
 
   async function fetchUsers() {
     setIsLoading(true);
@@ -38,7 +41,8 @@ export function useUsers() {
       if (success && data) {
         setUsers(data as User[]);
       } else {
-        setError(message || "Une erreur s'est produite");
+        toast.error(message || defaultErrorMessage);
+        setError(message || defaultErrorMessage);
       }
     } finally {
       setIsLoading(false);
@@ -49,13 +53,9 @@ export function useUsers() {
     fetchUsers();
   }, []);
 
-  return { 
-    users, 
-    isLoading, 
-    error, 
-    refetch: fetchUsers 
-  };
+  return { users, isLoading, error, refetch: fetchUsers };
 }
+
 ```
 
 ---
@@ -116,6 +116,7 @@ Le pattern le plus courant pour récupérer des données.
 import { useEffect, useState } from "react";
 import { getProducts } from "./products.service";
 import { Product } from "@/models/product.model";
+import { toast } from "sonner";
 
 interface UseProductsOptions {
   initialFetch?: boolean;
@@ -128,6 +129,8 @@ export function useProducts(options: UseProductsOptions = {}) {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLoading, setIsLoading] = useState(initialFetch);
   const [error, setError] = useState<string | null>(null);
+  const defaultErrorMessage =
+    "Une erreur s'est produite lors de la récupération des produits";
 
   async function fetchProducts() {
     setIsLoading(true);
@@ -137,7 +140,8 @@ export function useProducts(options: UseProductsOptions = {}) {
       if (success && data) {
         setProducts(data as Product[]);
       } else {
-        setError(message || "Erreur lors du chargement");
+        toast.error(message || defaultErrorMessage);
+        setError(message || defaultErrorMessage);
       }
     } finally {
       setIsLoading(false);
@@ -170,11 +174,14 @@ Pour récupérer une ressource unique par ID.
 import { useEffect, useState } from "react";
 import { getUserById } from "./users.service";
 import { User } from "@/models/user.model";
+import { toast } from "sonner";
 
 export function useUser(id: string | null) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(!!id);
   const [error, setError] = useState<string | null>(null);
+  const defaultErrorMessage =
+    "Une erreur s'est produite lors de la récupération de l'utilisateur";
 
   async function fetchUser() {
     if (!id) return;
@@ -186,7 +193,8 @@ export function useUser(id: string | null) {
       if (success && data) {
         setUser(data as User);
       } else {
-        setError(message || "Utilisateur non trouvé");
+        toast.error(message || defaultErrorMessage);
+        setError(message || defaultErrorMessage);
       }
     } finally {
       setIsLoading(false);
@@ -216,6 +224,7 @@ Pour les opérations CRUD (create, update, delete).
 import { useState } from "react";
 import { createUser, updateUser, deleteUser } from "./users.service";
 import { CreateUserDTO, UpdateUserDTO } from "./users.types";
+import { toast } from "sonner";
 
 export function useUserMutations() {
   const [isLoading, setIsLoading] = useState(false);
@@ -227,6 +236,7 @@ export function useUserMutations() {
     try {
       const result = await createUser(data);
       if (!result.success) {
+        toast.error(result.message || "Erreur lors de la création");
         setError(result.message || "Erreur lors de la création");
       }
       return result;
@@ -241,6 +251,7 @@ export function useUserMutations() {
     try {
       const result = await updateUser(id, data);
       if (!result.success) {
+        toast.error(result.message || "Erreur lors de la mise à jour");
         setError(result.message || "Erreur lors de la mise à jour");
       }
       return result;
@@ -255,6 +266,7 @@ export function useUserMutations() {
     try {
       const result = await deleteUser(id);
       if (!result.success) {
+        toast.error(result.message || "Erreur lors de la suppression");
         setError(result.message || "Erreur lors de la suppression");
       }
       return result;

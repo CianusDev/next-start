@@ -98,10 +98,13 @@ src/
 | React | 19.x | UI Library |
 | TypeScript | 5.x | Typage strict |
 | Tailwind CSS | 4.x | Styling |
-| shadcn/ui | latest | Composants UI |
+| shadcn/ui | latest | Composants UI (radix-ui) |
 | Zod | 4.x | Validation |
+| react-hook-form | 7.x | Formulaires |
 | Axios | 1.x | HTTP Client |
 | jose | 6.x | JWT |
+| sonner | 2.x | Toasts |
+| lucide-react | latest | Icônes |
 
 ---
 
@@ -170,4 +173,4 @@ Si tu modifies l'architecture ou ajoutes de nouveaux patterns :
 
 ---
 
-*Dernière mise à jour : Janvier 2025*
+*Dernière mise à jour : Mars 2026*

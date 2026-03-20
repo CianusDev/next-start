@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import LocalFont from "next/font/local";
 import "./globals.css";
 import { clientEnv } from "@/config/env";
+import { cn } from "@/lib/utils";
+import { Toaster } from "sonner";
 
 const googleSans = LocalFont({
   src: "../../public/fonts/google_sans.ttf",
@@ -22,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={`${googleSans.className} antialiased`}>{children}</body>
+      <Toaster className={cn(googleSans.className, "font-medium")} />
     </html>
   );
 }

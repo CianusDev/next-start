@@ -26,7 +26,8 @@ src/features/{feature-name}/
 ├── {feature}.service.ts     # Actions serveur (appels API)
 ├── use-{feature}.ts         # Hook React (logique client)
 ├── {feature}.guard.ts       # Protection/vérifications (optionnel)
-├── {feature}.types.ts       # Types spécifiques (optionnel)
+├── {feature}.types.ts       # Types/DTOs spécifiques (optionnel)
+├── {feature}.interface.ts   # Interfaces TypeScript (optionnel, alt à types.ts)
 └── readme.md                # Documentation de la feature
 ```
 
@@ -220,9 +221,11 @@ export function UserCard({ user, onEdit, onDelete }: UserCardProps) {
 
 ---
 
-### 5. Types (`*.types.ts`) - Optionnel
+### 5. Types (`*.types.ts` ou `*.interface.ts`) - Optionnel
 
-Types spécifiques à la feature (DTOs, états locaux).
+Types et interfaces spécifiques à la feature (DTOs, états locaux, payloads).
+
+> Les deux extensions sont valides : utiliser `*.interface.ts` pour des interfaces pures (ex: payloads d'API), `*.types.ts` pour un mix de types et interfaces.
 
 ```typescript
 // features/users/users.types.ts

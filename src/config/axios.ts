@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
-import { getToken } from "../services/session.service";
+import { getToken, removeSession } from "../services/session.service";
 import { clientEnv } from "./env";
 import { APIResponse } from "./types";
 import { redirect } from "next/navigation";
@@ -60,6 +60,7 @@ export async function processApiData(
     const message = error.response?.data as { error: string };
     switch (status) {
       case 401: {
+        await removeSession();
         redirect("/");
       }
       default:

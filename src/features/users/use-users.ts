@@ -2,11 +2,14 @@
 import { User } from "@/models/user.model";
 import { useEffect, useState } from "react";
 import { getUsers } from "./users.service";
+import { toast } from "sonner";
 
 export function useUsers() {
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const defaultErrorMessage =
+    "Une erreur s'est produite lors de la récupération des utilisateurs";
 
   async function fetchUsers() {
     setIsLoading(true);
@@ -16,7 +19,8 @@ export function useUsers() {
       if (success && data) {
         setUsers(data as User[]);
       } else {
-        setError(message || "Une erreur s'est produite");
+        toast.error(message || defaultErrorMessage);
+        setError(message || defaultErrorMessage);
       }
     } finally {
       setIsLoading(false);
